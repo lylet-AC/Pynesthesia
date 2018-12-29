@@ -1,4 +1,5 @@
 import os
+import utilities
 
 
 def configure(file_name):
@@ -8,7 +9,7 @@ def configure(file_name):
     prompt = ""
 
     try:
-        print("[confset]Loading the file: ", file_name, "...\n")
+        print("[confset] Loading the file: ", file_name, "...\n")
 
         with open(file_name) as reader:
             file = reader.readlines()
@@ -46,24 +47,7 @@ def configure(file_name):
 
     except IOError:
         print(
-            "\n[confset]An IOError occured.  Perhaps the settings file has been removed.\n")
+            "\n[confset] An IOError occured.  Perhaps the settings file has been removed.\n")
 
     # print(new_lines)
-    write_file(new_lines, file_name)
-
-
-def write_file(new_lines, file_name):
-
-    try:
-        print("\n[confset]Rewriting the file: ", file_name, "...")
-        file = open(file_name, "w")
-
-        for line in new_lines:
-            file.write(line)
-
-        file.close()
-
-        print("[confset]Done!")
-
-    except BaseException:
-        print("\n[confset]Rewriting the file encountered an error.\n")
+    utilities.write_file(new_lines, file_name)
