@@ -61,7 +61,7 @@ def create_new_game():
                         SPRITE_FOLDER,
                         object_image_path))
 
-                color_dict[color] = [object_image_path, object_name]
+                color_dict[color] = [object_name, object_image_path]
 
                 EXIT = True
 
@@ -72,4 +72,41 @@ def create_new_game():
                 print(
                     "[newgame] Please insert the image into the 'sprites' directory and try again.\n")
 
-    print(color_dict)
+    os.system('clear')
+    create_pygame_classes(GAME_TITLE, unique_color_list, color_dict)
+
+
+def create_pygame_classes(GAME_TITLE, unique_color_list, color_dict):
+    """This method will create pygame classes for each dictionary object"""
+
+    # define the name of the directory to be created
+    NEW_GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
+
+    try:
+        pass
+        os.mkdir(NEW_GAME_FOLDER)
+    except OSError:
+        print ("[newgame] Creation of the new game directory at: \n{} has failed".format(NEW_GAME_FOLDER))
+    else:
+        print ("[newgame] Successfully created the new game directory at:\n{} ".format(NEW_GAME_FOLDER))
+
+
+    print("[newgame] Creating PyGame classes...")
+
+    new_lines = ["import pygame as pg\n", "from settings import *"]
+
+
+    for color in color_dict:
+        new_lines.append("\n")
+        new_lines.append("class {}(pg.sprite.Sprite):\n".format(color_dict[color][0]))
+        new_lines.append("    def __init__(self, game, x, y):\n")
+        new_lines.append("        self.groups = game.all_sprites\n")
+        new_lines.append("        pg.sprite.Sprite.__init__(self, self.groups)\n")
+        new_lines.append("        self.game = game\n")
+        new_lines.append("        self.image = game.{}\n".format(color_dict[color][1]))
+        new_lines.append("        self.rect = self.image.get_rect()\n")
+        new_lines.append("        self.x = x\n")
+        new_lines.append("        self.y = y\n")
+
+    CLASS_FILE = os.path.join(NEW_GAME_FOLDER, "classes.py")
+    utilities.write_file(new_lines, CLASS_FILE)

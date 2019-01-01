@@ -31,7 +31,7 @@ while EXIT == False:
 
     elif command == "confset":
         os.system('clear')
-        configure_settings.configure("settings.py")
+        configure_settings.configure_settings("settings.py")
 
     elif command == "helpxl":
         # TODO create additional tools for selecting specific settings configurations and add the commands to this section
@@ -53,14 +53,8 @@ while EXIT == False:
 
     elif command == "test":
         os.system('clear')
-        INPUT_IMAGE_PATH = input(
-            "\n[newgame] Please enter an image for the map: ")
-        input_image = Image.open(
-            os.path.join(
-                MAP_INPUT_FOLDER,
-                INPUT_IMAGE_PATH))
-
-        print(utilities.get_unique_color_list(input_image))
+        print("creating directories")
+        game_gen.create_pygame_classes([(0, 0, 0), (255, 255, 255)], {(0, 0, 0): ["Wall", "wall.png"], (255, 255, 255): ["Floor", "floor.png"]})
 
     else:
         print("Invalid command.")

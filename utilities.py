@@ -15,7 +15,6 @@ def get_unique_color_list(input_image):
             if pix[w, h] not in unique_list:
                 unique_list.append(pix[w, h])
 
-    print(unique_list)
     return unique_list
 
 

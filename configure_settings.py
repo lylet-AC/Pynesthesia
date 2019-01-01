@@ -2,7 +2,7 @@ import os
 import utilities
 
 
-def configure(file_name):
+def configure_settings(file_name):
 
     # list containing the new file to be written
     new_lines = []
