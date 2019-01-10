@@ -18,7 +18,7 @@ while EXIT == False:
         print("")
         print("newgame - to create a new game")
         print("confset - configure the default game settings")
-        print("helpxl - extra help for more advanced tasks")
+        print("addmap - add a map to an existing game")
         print("htu - how to use Pynesthesia")
         print("exit - to exit Pynesthesia")
         print("")
@@ -33,9 +33,9 @@ while EXIT == False:
         os.system('clear')
         configure_settings.configure_settings("settings.py")
 
-    elif command == "helpxl":
-        # TODO create additional tools for selecting specific settings configurations and add the commands to this section
-        pass
+    elif command == "addmap":
+        os.system('clear')
+        game_gen.add_map_to_project()
 
     elif command == "htu":
         os.system('clear')
@@ -50,11 +50,6 @@ while EXIT == False:
     elif command == "exit":
         os.system('clear')
         EXIT = True
-
-    elif command == "test":
-        os.system('clear')
-        print("creating directories")
-        game_gen.create_pygame_classes([(0, 0, 0), (255, 255, 255)], {(0, 0, 0): ["Wall", "wall.png"], (255, 255, 255): ["Floor", "floor.png"]})
 
     else:
         print("Invalid command.")

@@ -34,7 +34,7 @@ DISPLAY_FPS = 45
 DISPLAY_TITLE = ""
 
 # size of the in game tiles
-TILE_SIZE = 32
+TILE_SIZE = 64
 
 # speed of the player
 PLAYER_SPEED = 4
