@@ -367,7 +367,7 @@ def create_main_game_code(GAME_TITLE, NEW_GAME_FOLDER, color_dict, MAP_TITLE):
     new_lines.append("        # initialize all variables and do all the setup for a new game\n")
     new_lines.append("        self.background_sprites = pg.sprite.Group()\n")
     new_lines.append("\n")
-    new_lines.append("        # logic for drawing tiles from a list of lists")
+    new_lines.append("        # logic for drawing tiles from a list of lists\n")
     new_lines.append("        for col, colors in enumerate(self.current_map):\n")
     new_lines.append("            for row, color in enumerate(colors):\n")
     new_lines.append("                # each color will load a specific tile\n")
