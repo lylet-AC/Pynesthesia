@@ -1,9 +1,10 @@
 from PIL import Image
 import os
-from settings import *
-import utilities
 from shutil import copy2, copytree
 import pickle
+# local imports
+from settings import *
+import utilities
 
 
 def create_new_game():
@@ -14,28 +15,17 @@ def create_new_game():
     NEW_GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
     LEVELS_FOLDER = os.path.join(NEW_GAME_FOLDER, "levels")
 
-    # iterate through the while loop until correct input is gathered
-    while True:
+    # get the input image with this prompt for the user
+    prompt = "\n[newgame] Please enter an image for the map: "
+    input_image = utilities.get_image_if_valid(prompt, MAP_INPUT_FOLDER)
 
-        # try to get the input image
-        try:
-            prompt = "\n[newgame] Please enter an image for the map: "
-            INPUT_IMAGE_PATH = utilities.get_path_if_valid(prompt, path=MAP_INPUT_FOLDER)
-            input_image = Image.open(INPUT_IMAGE_PATH)
-
-        # if bad input is entered, an exception is thrown and caught here
-        except BaseException as e:
-            print("[newgame] This file is not a supported format.")
-
-        # if we do not encounter an exception break the loop
-        else:
-            break
-
+    # the map file will be named this
     DEFAULT_MAP_TITLE = input("[newgame] Please enter a title for your new map: ")
 
     # gather the list of unique colors from the input image
     unique_color_list = utilities.get_unique_color_list(input_image)
 
+    print(unique_color_list)
     # use the unique color list to generate the color dictionary
     color_dict = utilities.get_color_dict(unique_color_list)
 
@@ -87,34 +77,6 @@ def get_existing_color_list(LEVELS_FOLDER):
     return unique_color_list
 
 
-def create_pygame_classes(GAME_TITLE, NEW_GAME_FOLDER, color_dict):
-    """This method will create pygame classes for each dictionary object"""
-
-    print("[newgame] Creating PyGame classes...")
-
-    # new_lines contains the data we will be writing to the output folder
-    new_lines = ["import pygame as pg\n", "from settings import *\n"]
-
-    # append data to new_lines.  This data is gathered from the color_dict.
-    for color in color_dict:
-        new_lines.append("\n")
-        new_lines.append("class {}(pg.sprite.Sprite):\n".format(color_dict[color][0]))
-        new_lines.append("    def __init__(self, game, x, y):\n")
-        new_lines.append("        self.groups = game.background_sprites\n")
-        new_lines.append("        pg.sprite.Sprite.__init__(self, self.groups)\n")
-        new_lines.append("        self.game = game\n")
-        new_lines.append("        self.image = game.{}_img\n".format(color_dict[color][0]))
-        new_lines.append("        self.rect = self.image.get_rect()\n")
-        new_lines.append("        self.x = x\n")
-        new_lines.append("        self.y = y\n")
-        new_lines.append("        self.rect.x = x * TILE_SIZE\n")
-        new_lines.append("        self.rect.y = y * TILE_SIZE\n")
-
-    # declare a file in our new game called "classes.py"
-    CLASS_FILE = os.path.join(NEW_GAME_FOLDER, "classes.py")
-    # write the content of new_lines to the CLASS_FILE
-    utilities.write_file(new_lines, CLASS_FILE)
-
 def create_map(LEVELS_FOLDER, input_image, MAP_TITLE):
     """This method will save the map for the input level into the levels directory of the new game"""
 
@@ -141,35 +103,21 @@ def add_map_to_project():
     CLASS_FILE = os.path.join(GAME_FOLDER, "classes.py")
     LEVELS_FOLDER = os.path.join(GAME_FOLDER, "levels")
 
-
-    # iterate through the while loop until correct input is gathered
-    while True:
-
-        # try to get the input image
-        try:
-            INPUT_IMAGE_PATH = input(
-                "\n[addmap] Please enter an image for the map: ")
-            input_image = Image.open(os.path.join(MAP_INPUT_FOLDER, INPUT_IMAGE_PATH))
-
-            EXIT = True
-
-        # if bad input is entered, an exception is thrown and caught here
-        except BaseException:
-            print("[addmap] This image is not a supported format or does not exist.")
-            print("[addmap] Please insert the image into the 'sprites' directory and try again.\n")
+    # open the input image using the prompt below
+    prompt = "\n[addmap] Please enter an image for the map: "
+    input_image = utilities.get_image_if_valid(prompt, MAP_INPUT_FOLDER)
 
     # based on the gathered input we can create the map
     create_map(LEVELS_FOLDER, input_image, MAP_TITLE)
 
-    # next we need to check if the new map contains a new color.
+    # check if the new map contains a new color.
     old_colors = get_existing_color_list(LEVELS_FOLDER)
     new_colors = utilities.get_unique_color_list(input_image)
 
-    # the utilities function for getting an updated color list returns three values.
-    # these values are an updated color list, a boolean flag which tells us if a new color was found, as well as a list of new colors.
+    # if there is a new color a flag is marked as true and two lists are updated to contain these values
     updated_unique_color_list, new_tile_flag, new_colors = utilities.return_updated_list(old_colors, new_colors)
 
-    # in this game we then update the dumped list of unique colors incase we need to use it again
+    # dump the list of unique colors to the levels folder
     set_unique_colors_list(LEVELS_FOLDER, updated_unique_color_list)
 
     # if we did find a new color, we need to create game code for it
@@ -248,6 +196,35 @@ def add_map_to_project():
 
     # write the new lines and then close the reader
     utilities.write_file(new_lines, GAME_FILE)
+
+
+def create_pygame_classes(GAME_TITLE, NEW_GAME_FOLDER, color_dict):
+    """This method will create pygame classes for each dictionary object"""
+
+    print("[newgame] Creating PyGame classes...")
+
+    # new_lines contains the data we will be writing to the output folder
+    new_lines = ["import pygame as pg\n", "from settings import *\n"]
+
+    # append data to new_lines.  This data is gathered from the color_dict.
+    for color in color_dict:
+        new_lines.append("\n")
+        new_lines.append("class {}(pg.sprite.Sprite):\n".format(color_dict[color][0]))
+        new_lines.append("    def __init__(self, game, x, y):\n")
+        new_lines.append("        self.groups = game.background_sprites\n")
+        new_lines.append("        pg.sprite.Sprite.__init__(self, self.groups)\n")
+        new_lines.append("        self.game = game\n")
+        new_lines.append("        self.image = game.{}_img\n".format(color_dict[color][0]))
+        new_lines.append("        self.rect = self.image.get_rect()\n")
+        new_lines.append("        self.x = x\n")
+        new_lines.append("        self.y = y\n")
+        new_lines.append("        self.rect.x = x * TILE_SIZE\n")
+        new_lines.append("        self.rect.y = y * TILE_SIZE\n")
+
+    # declare a file in our new game called "classes.py"
+    CLASS_FILE = os.path.join(NEW_GAME_FOLDER, "classes.py")
+    # write the content of new_lines to the CLASS_FILE
+    utilities.write_file(new_lines, CLASS_FILE)
 
 
 def create_main_game_code(GAME_TITLE, NEW_GAME_FOLDER, color_dict, MAP_TITLE):

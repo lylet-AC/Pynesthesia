@@ -1,11 +1,10 @@
 
 import os
+from PIL import Image
+# local imports
 from settings import *
-
-# imports from local files
 import configure_settings
 import game_gen
-from PIL import Image
 import utilities
 
 

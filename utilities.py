@@ -1,16 +1,14 @@
 from PIL import Image
 import os
-from settings import *
 import pickle
+# local imports
+from settings import *
 
 
 def get_path_if_valid(prompt, type="file", path=""):
     """This method ensures that a file exists and returns the filepath if it does"""
 
-    # if the file exists
-    exists = False
-
-    while exists == False:
+    while True:
 
         file = input(prompt)
         full_path = os.path.join(path, file)
@@ -18,38 +16,35 @@ def get_path_if_valid(prompt, type="file", path=""):
         # if we are looking for a directory
         if type == "directory":
             if os.path.exists(full_path):
-                exists = True
+                return full_path
             else:
                 print("[utilities] That directory does not exist.\n")
 
         # if we are looking for a file
         elif type == "file":
             if os.path.isfile(full_path):
-                exists = True
+                return full_path
             else:
                 print("[utilities] That file does not exist.\n")
-
-    return full_path
 
 def get_image_if_valid(prompt, path=""):
     """This method will ask the user a prompt and return an loaded PIL image"""
 
-        # iterate through the while loop until correct input is gathered
-        while True:
+    # iterate through the while loop until correct input is gathered
+    while True:
 
-            # try to get the input image
-            try:
-                prompt = "\n[newgame] Please enter an image for the map: "
-                INPUT_IMAGE_PATH = utilities.get_path_if_valid(prompt, path=MAP_INPUT_FOLDER)
-                input_image = Image.open(INPUT_IMAGE_PATH)
+        # try to get the input image
+        try:
+            INPUT_IMAGE_PATH = get_path_if_valid(prompt, path=path)
+            image = Image.open(INPUT_IMAGE_PATH)
 
-            # if bad input is entered, an exception is thrown and caught here
-            except BaseException as e:
-                print("[newgame] This file is not a supported format.")
+        # if bad input is entered, an exception is thrown and caught here
+        except BaseException as e:
+            print("[newgame] This file is not a supported format.")
 
-            # if we do not encounter an exception break the loop
-            else:
-                break
+        # if we do not encounter an exception break the loop
+        else:
+            return image
 
 def get_color_dict(unique_color_list):
     """This method takes a list of colors and asks the user for input"""
@@ -61,7 +56,6 @@ def get_color_dict(unique_color_list):
         object_name = input(
             "[utilities] What would you like color {} to represent? ".format(color))
 
-        # exit is false as default
         EXIT = False
 
         # iterate through the while loop until correct input is gathered
@@ -134,6 +128,7 @@ def return_updated_list(old_color_list, new_color_list):
 
 def write_file(new_lines, file_name):
     """This method writes information in the form of a list of lines to the file specified by file_name"""
+
     try:
         print("\n[utilities] Writing the file: ", file_name, "...")
         file = open(file_name, "w")
@@ -143,7 +138,7 @@ def write_file(new_lines, file_name):
 
         file.close()
 
-        print("[utilities] Done!")
+        print("[utilities] Done!\n")
 
     except BaseException:
         print("\n[utilities] Writing the file encountered an error.\n")

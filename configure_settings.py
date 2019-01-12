@@ -1,4 +1,5 @@
 import os
+# local imports
 import utilities
 
 
@@ -15,19 +16,15 @@ def configure_settings(file_name):
             file = reader.readlines()
 
             for line in file:
-                # check if the first character is "#" or " " " denoting a
-                # comment
+                # check if the first character is "#" or " " "
                 if line[0] == "#" or line[0] == "\"" or "import" in line or "FOLDER" in line:
-                    #line = line.replace("\n", "")
                     new_lines.append(line)
 
-                # check if the line is blank and append it if it is
+                # check if the line is blank
                 elif "\n" == line:
-                    #line = line.replace("\n", "")
                     new_lines.append(line)
 
-                # special case for TITLE, we need to place quotes around the
-                # user value
+                # for TITLES, quotes need to be placed around the lines
                 elif "TITLE" in line:
                     line = line.replace("\n", "")
                     value = input("{} = ".format(line[:line.index(" ")]))
@@ -36,8 +33,7 @@ def configure_settings(file_name):
 
                     new_lines.append(temp_line)
 
-                # all else should be inputs containing integers, so we just
-                # write these to new_lines
+                # all else should be values containing integers
                 else:
                     line = line.replace("\n", "")
                     value = input("{} = ".format(line[:line.index(" ")]))
