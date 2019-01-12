@@ -22,16 +22,16 @@ TEST_IMAGE = os.path.join(TEST_FOLDER, "test_img.png")
 
 """ Game settings here """
 # the width of the game window
-DISPLAY_WIDTH = 1024
+DISPLAY_WIDTH = 512
 
 # the height of the game window
-DISPLAY_HEIGHT = 768
+DISPLAY_HEIGHT = 512
 
 # the frames per second the game runs at
 DISPLAY_FPS = 45
 
 # the text at the top of the game window
-DISPLAY_TITLE = ""
+DISPLAY_TITLE = "Example Game"
 
 # size of the in game tiles
 TILE_SIZE = 32

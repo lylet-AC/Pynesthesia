@@ -16,10 +16,13 @@ class Game:
 
     def load_data(self):
         # load the map data
+        self.map3_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map3.p"), "rb"))
         self.map2_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map2.p"), "rb"))
         self.map1_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map1.p"), "rb"))
 
         # load the image data
+        self.floor_img = pg.image.load(os.path.join(SPRITE_FOLDER, "floor.png"))
+        self.floor_img = pg.transform.scale(self.floor_img, (TILE_SIZE, TILE_SIZE))
         self.wall_img = pg.image.load(os.path.join(SPRITE_FOLDER, "wall.png"))
         self.wall_img = pg.transform.scale(self.wall_img, (TILE_SIZE, TILE_SIZE))
         self.floor_img = pg.image.load(os.path.join(SPRITE_FOLDER, "floor.png"))
@@ -39,6 +42,8 @@ class Game:
         for col, colors in enumerate(self.current_map):
             for row, color in enumerate(colors):
                 # each color will load a specific tile
+                if color == (230, 230, 19):
+                    floor(self, col, row)
                 if color == (0, 0, 0):
                     wall(self, col, row)
                 if color == (255, 255, 255):

@@ -25,7 +25,6 @@ def create_new_game():
     # gather the list of unique colors from the input image
     unique_color_list = utilities.get_unique_color_list(input_image)
 
-    print(unique_color_list)
     # use the unique color list to generate the color dictionary
     color_dict = utilities.get_color_dict(unique_color_list)
 
@@ -94,11 +93,17 @@ def add_map_to_project():
     new_lines = []
 
     # the user will input some names for the existing project and name their new map
-    GAME_TITLE = input("[addmap] Please enter the name of your project: ")
+    while True:
+        GAME_TITLE = input("[addmap] Please enter the name of your project: ")
+        GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
+        if os.path.exists(GAME_FOLDER):
+            break
+        else:
+            print("[addmap] this file/directory has been renamed or removed.\n")
+
     MAP_TITLE = input("[addmap] Please enter a title for your new map: ")
 
     # based on the GAME_TITLE we find the other needed directories
-    GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
     GAME_FILE = os.path.join(GAME_FOLDER, GAME_TITLE + ".py")
     CLASS_FILE = os.path.join(GAME_FOLDER, "classes.py")
     LEVELS_FOLDER = os.path.join(GAME_FOLDER, "levels")

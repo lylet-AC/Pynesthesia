@@ -41,6 +41,7 @@ def get_image_if_valid(prompt, path=""):
         # if bad input is entered, an exception is thrown and caught here
         except BaseException as e:
             print("[newgame] This file is not a supported format.")
+            print(e)
 
         # if we do not encounter an exception break the loop
         else:
