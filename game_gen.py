@@ -95,18 +95,22 @@ def add_map_to_project():
     # the user will input some names for the existing project and name their new map
     while True:
         GAME_TITLE = input("[addmap] Please enter the name of your project: ")
+
+        # based on the GAME_TITLE we find the other needed directories
         GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
-        if os.path.exists(GAME_FOLDER):
+        GAME_FILE = os.path.join(GAME_FOLDER, GAME_TITLE + ".py")
+        CLASS_FILE = os.path.join(GAME_FOLDER, "classes.py")
+        LEVELS_FOLDER = os.path.join(GAME_FOLDER, "levels")
+
+        # check to ensure these files exist
+        if os.path.exists(GAME_FOLDER) and os.path.isfile(GAME_FILE) and os.path.isfile(CLASS_FILE) and os.path.exists(LEVELS_FOLDER):
+            os.system('clear')
             break
         else:
-            print("[addmap] this file/directory has been renamed or removed.\n")
+            print("[addmap] necessary files have been renamed or removed.")
+            print("[addmap] please ensure the correct name has been entered.\n")
 
     MAP_TITLE = input("[addmap] Please enter a title for your new map: ")
-
-    # based on the GAME_TITLE we find the other needed directories
-    GAME_FILE = os.path.join(GAME_FOLDER, GAME_TITLE + ".py")
-    CLASS_FILE = os.path.join(GAME_FOLDER, "classes.py")
-    LEVELS_FOLDER = os.path.join(GAME_FOLDER, "levels")
 
     # open the input image using the prompt below
     prompt = "\n[addmap] Please enter an image for the map: "
