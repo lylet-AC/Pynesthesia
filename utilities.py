@@ -3,18 +3,28 @@ import os
 from settings import *
 import pickle
 
-def get_path_if_valid(prompt, path=""):
+def get_path_if_valid(prompt, type="file", path=""):
     """This method ensures that a file exists and returns the filepath if it does"""
 
     exists = False
 
-    while exists = False
+    while exists == False:
         file = input(prompt)
 
         full_path = os.path.join(path, file)
 
-        if os.path.isfile(full_path):
-            exists = True
+        # if we are looking for a directory
+        if type == "directory":
+            if os.path.exists(full_path):
+                exists = True
+
+        # if we are looking for a file
+        elif type == "file":
+            if os.path.isfile(full_path):
+                exists = True
+
+        else:
+            print("The file does not exist.")
 
     return full_path
 

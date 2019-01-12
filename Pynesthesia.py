@@ -54,6 +54,10 @@ if __name__ == "__main__":
             print("Step 4: Run the newgame command to create a new Pynesthesia project.\n")
             print("Follow the prompts and have fun!\n")
 
+        elif command == "test":
+            os.system('clear')
+            utilities.get_path_if_valid("[test] Please enter a directory: ", type="directory")
+
         else:
             print("Invalid command.")
 
