@@ -1,6 +1,6 @@
 # Pynesthesia
 
-Pynesthesia is a map generation tool that allows a user to draw a simple tile-based game map by importing a sample image.  The sample image should contain basic colors which Pynesthesia will draw textures to.  The user will need to know the RGB colors of each pixel for the input image and input them into Pynesthesia for the program to know which textures to draw per color.
+Pynesthesia is a code generation tool that allows a user to draw a simple tile-based game map by importing an input image.  The input image should contain basic colors which Pynesthesia will draw textures to.  The user will need to know the RGB colors of each pixel for the input image and input them into Pynesthesia for the program to know which textures to draw per color.
 
 ## Installation
 
@@ -15,5 +15,8 @@ After installing pip3, run the following command in the root directory of this p
 `pip3 install --upgrade pip
 pip3 install --user -r requirements.txt`.
 
-Afterwards, run the program using the following line:
+Afterwards, run the program using the either of the following lines depending on your python installation:
 `python3 Pynesthesia.py`
+`py -3 Pynesthesia.py`
+
+## Using Pynesthesia
