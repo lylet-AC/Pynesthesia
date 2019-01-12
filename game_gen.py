@@ -8,13 +8,11 @@ import pickle
 
 def create_new_game():
 
-    # define a dictionary to store colors and their associated sprites and
-    # class names
-    color_dict = {}
-
-    # the title of the game project.  This will later turn into the directory
-    # of the generated code.
     GAME_TITLE = input("[newgame] Please enter a name for your project: ")
+
+    # define some directories
+    NEW_GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
+    LEVELS_FOLDER = os.path.join(NEW_GAME_FOLDER, "levels")
 
     # exit defaults to false
     EXIT = False
@@ -24,12 +22,10 @@ def create_new_game():
 
         # try to get the input image
         try:
-            INPUT_IMAGE_PATH = input(
-                "\n[newgame] Please enter an image for the map: ")
-            input_image = Image.open(
-                os.path.join(
-                    MAP_INPUT_FOLDER,
-                    INPUT_IMAGE_PATH))
+            INPUT_IMAGE_PATH = input("\n[newgame] Please enter an image for the map: ")
+
+            input_image = Image.open(os.path.join(MAP_INPUT_FOLDER, INPUT_IMAGE_PATH))
+
             EXIT = True
 
         # if bad input is entered, an exception is thrown and caught here
@@ -43,43 +39,8 @@ def create_new_game():
     # gather the list of unique colors from the input image
     unique_color_list = utilities.get_unique_color_list(input_image)
 
-    # for each color in the list we ask the user to enter a class name and
-    # sprite image
-    for color in unique_color_list:
-        os.system('clear')
-        object_name = input(
-            "[newgame] What would you like color {} to represent? ".format(color))
-
-        # exit is false as default
-        EXIT = False
-
-        # iterate through the while loop until correct input is gathered
-        while EXIT == False:
-
-            # try to get the sprite image
-            try:
-                object_image_path = input(
-                    "\n[newgame] Please provide the image for this object: ")
-                test_open = Image.open(
-                    os.path.join(
-                        SPRITE_FOLDER,
-                        object_image_path))
-
-                color_dict[color] = [object_name, object_image_path]
-
-                EXIT = True
-
-            # if bad input is entered, an exception is thrown and caught here
-            except BaseException:
-                print(
-                    "[newgame] This image is not a supported format or does not exist.")
-                print(
-                    "[newgame] Please insert the image into the 'sprites' directory and try again.\n")
-
-
-    # define the name of the directory to be created
-    NEW_GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
-    LEVELS_FOLDER = os.path.join(NEW_GAME_FOLDER, "levels")
+    # use the unique color list to generate the color dictionary
+    color_dict = utilities.get_color_dict(unique_color_list)
 
     # try to make directories, copy files, and write data
     try:
@@ -176,8 +137,6 @@ def add_map_to_project():
 
     # new_lines contains data to be written to a file
     new_lines = []
-    # set up our color dictionary which will be added too shortly
-    color_dict = {}
 
     # the user will input some names for the existing project and name their new map
     GAME_TITLE = input("[addmap] Please enter the name of your project: ")
@@ -224,36 +183,7 @@ def add_map_to_project():
 
     # if we did find a new color, we need to create game code for it
     if new_tile_flag:
-        for color in new_colors:
-            os.system('clear')
-            object_name = input(
-                "[newgame] What would you like color {} to represent? ".format(color))
-
-            EXIT = False
-
-            # iterate through the while loop until correct input is gathered
-            while EXIT == False:
-
-                # try to get the sprite image
-                try:
-                    object_image_path = input(
-                        "\n[newgame] Please provide the image for this object: ")
-                    test_open = Image.open(
-                        os.path.join(
-                            SPRITE_FOLDER,
-                            object_image_path))
-
-                    #create the color dictionary using user input
-                    color_dict[color] = [object_name, object_image_path]
-
-                    EXIT = True
-
-                # if bad input is entered, an exception is thrown and caught here
-                except BaseException:
-                    print(
-                        "[newgame] This image is not a supported format or does not exist.")
-                    print(
-                        "[newgame] Please insert the image into the 'sprites' directory and try again.\n")
+        color_dict = utilities.get_color_dict(new_colors)
 
         # attempt to update the classes.py file with new_lines based on the color_dict
         try:
@@ -289,7 +219,6 @@ def add_map_to_project():
 
         # write to the class file and then dump new_lines
         utilities.write_file(new_lines, CLASS_FILE)
-        reader.close()
         new_lines = []
 
     # regardless of a new color, the GAME_FILE needs updated.  This also uses color_dict.
@@ -328,7 +257,6 @@ def add_map_to_project():
 
     # write the new lines and then close the reader
     utilities.write_file(new_lines, GAME_FILE)
-    reader.close()
 
 
 def create_main_game_code(GAME_TITLE, NEW_GAME_FOLDER, color_dict, MAP_TITLE):

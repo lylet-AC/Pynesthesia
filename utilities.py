@@ -3,6 +3,58 @@ import os
 from settings import *
 import pickle
 
+def get_path_if_valid(prompt, path=""):
+    """This method ensures that a file exists and returns the filepath if it does"""
+
+    exists = False
+
+    while exists = False
+        file = input(prompt)
+
+        full_path = os.path.join(path, file)
+
+        if os.path.isfile(full_path):
+            exists = True
+
+    return full_path
+
+
+def get_color_dict(unique_color_list):
+    """This method takes a list of colors and asks the user for input"""
+
+    color_dict = {}
+
+    for color in unique_color_list:
+        os.system('clear')
+        object_name = input(
+            "[utilities] What would you like color {} to represent? ".format(color))
+
+        # exit is false as default
+        EXIT = False
+
+        # iterate through the while loop until correct input is gathered
+        while EXIT == False:
+
+            # try to get the sprite image
+            try:
+                object_image_path = input(
+                    "\n[utilities] Please provide the image for this object: ")
+                test_open = Image.open(
+                    os.path.join(
+                        SPRITE_FOLDER,
+                        object_image_path))
+
+                color_dict[color] = [object_name, object_image_path]
+
+                EXIT = True
+
+            # if bad input is entered, an exception is thrown and caught here
+            except BaseException:
+                print("[utilities] This image is not a supported format or does not exist.")
+                print("[utilities] Please insert the image into the 'sprites' directory and try again.\n")
+
+    return color_dict
+
 def get_unique_color_list(input_image):
     """This method obtains a list of unique colors in the input list"""
     pix = input_image.load()
