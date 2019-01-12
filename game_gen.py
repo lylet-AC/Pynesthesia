@@ -14,27 +14,24 @@ def create_new_game():
     NEW_GAME_FOLDER = os.path.join(OUTPUT_FOLDER, GAME_TITLE)
     LEVELS_FOLDER = os.path.join(NEW_GAME_FOLDER, "levels")
 
-    # exit defaults to false
-    EXIT = False
-
     # iterate through the while loop until correct input is gathered
-    while EXIT == False:
+    while True:
 
         # try to get the input image
         try:
-            INPUT_IMAGE_PATH = input("\n[newgame] Please enter an image for the map: ")
-
-            input_image = Image.open(os.path.join(MAP_INPUT_FOLDER, INPUT_IMAGE_PATH))
-
-            EXIT = True
+            prompt = "\n[newgame] Please enter an image for the map: "
+            INPUT_IMAGE_PATH = utilities.get_path_if_valid(prompt, path=MAP_INPUT_FOLDER)
+            input_image = Image.open(INPUT_IMAGE_PATH)
 
         # if bad input is entered, an exception is thrown and caught here
-        except BaseException:
-            print("[newgame] This image is not a supported format or does not exist.")
-            print(
-                "[newgame] Please insert the image into the 'sprites' directory and try again.\n")
+        except BaseException as e:
+            print("[newgame] This file is not a supported format.")
 
-    DEFAULT_MAP_TITLE = input("[addmap] Please enter a title for your new map: ")
+        # if we do not encounter an exception break the loop
+        else:
+            break
+
+    DEFAULT_MAP_TITLE = input("[newgame] Please enter a title for your new map: ")
 
     # gather the list of unique colors from the input image
     unique_color_list = utilities.get_unique_color_list(input_image)
@@ -44,7 +41,6 @@ def create_new_game():
 
     # try to make directories, copy files, and write data
     try:
-        pass
         os.mkdir(NEW_GAME_FOLDER)
         os.mkdir(LEVELS_FOLDER)
         copy_necessary_files(NEW_GAME_FOLDER)
@@ -122,12 +118,9 @@ def create_pygame_classes(GAME_TITLE, NEW_GAME_FOLDER, color_dict):
 def create_map(LEVELS_FOLDER, input_image, MAP_TITLE):
     """This method will save the map for the input level into the levels directory of the new game"""
 
-    # this dataset is a list of lists that contains the map data based on the input image
-    # this dataset is formatted with each row of pixels being it's own list
+    # contains a list of lists that represent the map
     map_list = utilities.get_color_map_list(input_image)
-
-    # much like before we set up a file to dump our dataset
-    # this file is named after whatever the user of Pynesthesia set MAP_TITLE to
+    # dump this list of lists to the levels folder of the game
     PICKLE_FILE = os.path.join(LEVELS_FOLDER, "{}.p".format(MAP_TITLE))
     pickle.dump(map_list, open(PICKLE_FILE, "wb"))
 
@@ -148,11 +141,9 @@ def add_map_to_project():
     CLASS_FILE = os.path.join(GAME_FOLDER, "classes.py")
     LEVELS_FOLDER = os.path.join(GAME_FOLDER, "levels")
 
-    # exit defaults to false
-    EXIT = False
 
     # iterate through the while loop until correct input is gathered
-    while EXIT == False:
+    while True:
 
         # try to get the input image
         try:

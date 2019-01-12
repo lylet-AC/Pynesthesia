@@ -3,31 +3,53 @@ import os
 from settings import *
 import pickle
 
+
 def get_path_if_valid(prompt, type="file", path=""):
     """This method ensures that a file exists and returns the filepath if it does"""
 
+    # if the file exists
     exists = False
 
     while exists == False:
-        file = input(prompt)
 
+        file = input(prompt)
         full_path = os.path.join(path, file)
 
         # if we are looking for a directory
         if type == "directory":
             if os.path.exists(full_path):
                 exists = True
+            else:
+                print("[utilities] That directory does not exist.\n")
 
         # if we are looking for a file
         elif type == "file":
             if os.path.isfile(full_path):
                 exists = True
-
-        else:
-            print("The file does not exist.")
+            else:
+                print("[utilities] That file does not exist.\n")
 
     return full_path
 
+def get_image_if_valid(prompt, path=""):
+    """This method will ask the user a prompt and return an loaded PIL image"""
+
+        # iterate through the while loop until correct input is gathered
+        while True:
+
+            # try to get the input image
+            try:
+                prompt = "\n[newgame] Please enter an image for the map: "
+                INPUT_IMAGE_PATH = utilities.get_path_if_valid(prompt, path=MAP_INPUT_FOLDER)
+                input_image = Image.open(INPUT_IMAGE_PATH)
+
+            # if bad input is entered, an exception is thrown and caught here
+            except BaseException as e:
+                print("[newgame] This file is not a supported format.")
+
+            # if we do not encounter an exception break the loop
+            else:
+                break
 
 def get_color_dict(unique_color_list):
     """This method takes a list of colors and asks the user for input"""
