@@ -31,7 +31,7 @@ Using Pynesthesia is as easy as following the on screen prompts that show up on 
  - `addmap` - follow the prompts to add a map to an existing Pynesthesia game
  - `howto` - a detailed description of how to use Pynesthesia
 
-### Important Information
+### Editing and Changing Filenames
 
 Pynesthesia expects a couple things from the user in order to achieve it's goal.  First, Pynesthesia expects the input image which will become the map to be located in the `input` directory; and all images that will be used for the in game tiles to be located in the `sprites` directory.  When attempting to access an image that doesn't exist, Pynesthesia will prompt the user that the image does not exist and print out the directory it expects the image to be in.  This mostly effects the `newgame` and `addmap` commands.
 
