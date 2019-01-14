@@ -18,14 +18,16 @@ def get_path_if_valid(prompt, type="file", path=""):
             if os.path.exists(full_path):
                 return full_path
             else:
-                print("[utilities] That directory does not exist.\n")
+                print("[utilities] That directory does not exist:\n")
+                print(full_path)
 
         # if we are looking for a file
         elif type == "file":
             if os.path.isfile(full_path):
                 return full_path
             else:
-                print("[utilities] That file does not exist.\n")
+                print("[utilities] That file does not exist at:\n")
+                print(full_path)
 
 def get_image_if_valid(prompt, path=""):
     """This method will ask the user a prompt and return an loaded PIL image"""

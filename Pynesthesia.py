@@ -25,7 +25,7 @@ if __name__ == "__main__":
             print("newgame - to create a new game")
             print("confset - configure the default game settings")
             print("addmap - add a map to an existing game")
-            print("htu - how to use Pynesthesia")
+            print("howto - how to use Pynesthesia")
             print("exit - to exit Pynesthesia")
             print("")
             print("It is recommended to first edit the setting.")
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             os.system('clear')
             game_gen.add_map_to_project()
 
-        elif command == "htu":
+        elif command == "howto":
             os.system('clear')
             print("Step 1: Place input images in the 'input' directory")
             print("These images will be converted into the game map.\n")
