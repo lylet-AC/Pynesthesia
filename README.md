@@ -1,6 +1,6 @@
 # Pynesthesia
 
-Pynesthesia is a code generation tool that allows a user to draw a simple tile-based game map by using an input image.  This program then converts that input image to Pygame code with each pixel color prompting the user for some input for creating a class for the tile.  The two most important pieces of information the user will input for each detected color will be the class name, as well as an image for the tile when displayed in the game.  Pynesthesia is written in Python and outputs Python Pygame code.  The code that is output is set up to be easily modified by the user to create a game.
+Pynesthesia is an open source code generation tool that allows a user to draw a simple tile-based game map by using an input image.  This program then converts that input image to Pygame code with each pixel color prompting the user for some input for creating a class for the tile.  The two most important pieces of information the user will input for each detected color will be the class name, as well as an image for the tile when displayed in the game.  Pynesthesia is written in Python and outputs Python Pygame code.  The code that is output is set up to be easily modified by the user to create a game.
 
 ## Installation
 
@@ -31,8 +31,12 @@ Using Pynesthesia is as easy as following the on screen prompts that show up on 
  - `addmap` - follow the prompts to add a map to an existing Pynesthesia game
  - `howto` - a detailed description of how to use Pynesthesia
 
-### Editing and Changing Filenames
+#### Editing and Changing Filenames
 
 Pynesthesia expects a couple things from the user in order to achieve it's goal.  First, Pynesthesia expects the input image which will become the map to be located in the `input` directory; and all images that will be used for the in game tiles to be located in the `sprites` directory.  When attempting to access an image that doesn't exist, Pynesthesia will prompt the user that the image does not exist and print out the directory it expects the image to be in.  This mostly effects the `newgame` and `addmap` commands.
 
-Secondly, Pynesthesia generates the Pygame code in a directory specified as the GAME_TITLE.  The GAME_TITLE is gathered as user input. The user is free to remove their created game from the output directory, however, to use features such as `addmap` the created game directory must be placed back in the output directory.  This also means that certain things cannot be renamed or else Pynesthesia will not be able to edit files appropriately.  Therefore, the user should not rename or remove generated folders, python files, or remove or rename comments in the generated code.
+Secondly, Pynesthesia generates the Pygame code in a directory specified by the user.  Methods in Pynesthesia gather this data as user input. The user is free to remove their created game from the output directory, however, methods such as `addmap` and `confset` gather this data as user input.  This means that the created game directory must be placed back in the output directory prior to using Pynesthesia to edit the project.  This also means that certain things cannot be renamed or else Pynesthesia will not be able to find files appropriately.  Therefore, the user should not rename or remove generated folders, python files, or remove or rename comments in the generated code.
+
+## Testing Pynesthesia
+
+## Coming in Future Updates
