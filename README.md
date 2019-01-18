@@ -6,7 +6,7 @@ Pynesthesia is an open source code generation tool that allows a user to generat
 
 Pynesthesia is a program written in Python 3.  Pip3 is the default package installer that comes with Python and therefore, it is required to install other dependencies for this program.    Pynesthesia supports three primary types of operating systems: **Ubuntu**, **Windows**, and **Mac OSX**; and other operating systems that can run software that support these systems.  Depending on your operating system, dependencies such as Python3, Pip3, and Tkinter will require a different set of instructions for setup.  
 
-#### Linux Distributions
+### Linux Distributions
 
 In most Linux distributions, Python comes pre-installed with the operating system.  Verifying that Python is installed is as simple as typing the following command into the terminal: `python3 --version`.  If Python3 is not installed, the terminal will usually give a command for installing Python3.  Alternatively, you can chose to use those instructions, or type in the following commands:
 ```
@@ -25,11 +25,11 @@ sudo apt-get install python-tk
 ```
 Then verify the installation by typing in `python3` into the terminal.  Once the Python interpreter opens, type `import tkinter`.  If no error occurs, then the tkinter package was successfully installed and you may now begin using Pynesthesia.
 
-#### Windows
+### Windows
 
 If you are a windows user and need to install Python3 / tkinter / Pip3, [download](https://www.python.org/downloads/windows/) the python3 installation file.  This file is capable of installing Python3, tkinter, and Pip3 given the correct boxes are checked. Meaning that one must ensure upon installing Python that **the td/tk and IDLE checkboxes are marked for installing tkinter and Pip3 with Python.** Pynesthesia specifically uses `Python 3.6.7`, although other iterations of Python3 should work properly as well.
 
-#### Mac OSX
+### Mac OSX
 
 Much like Linux, Python3 is included in the Mac OSX installation.  However, to keep Python3 updated, [download](https://www.python.org/downloads/mac-osx/) the relevant version of the Python3 binary.  These work similarly to its Windows counterpart, and one must ensure that **the tcl/tk and IDLE checkboxes are marked for installing tkinter and Pip3 with Python.**  After the installer has finished installing Python3 to your machine, you are ready to use Pynesthesia.
 
