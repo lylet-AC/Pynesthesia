@@ -62,7 +62,7 @@ It is first recommended to use the `confset` command to configure the settings o
 
 There is also a quirk with Pynesthesia and any created game sharing the same settings file.  This means that Pynesthesia uses the directories the same way the generated game does.
 
-#### Editing and Changing Filenames
+### Editing and Changing Filenames
 
 Pynesthesia expects a couple things from the user in order to achieve it's goal.  First, Pynesthesia expects the input image which will become the map to be located in the `input` directory; and all images that will be used for the in game tiles to be located in the `sprites` directory.  When attempting to access an image that doesn't exist, Pynesthesia will prompt the user that the image does not exist and print out the directory it expects the image to be in.  This mostly effects the `newgame` and `addmap` commands.
 
