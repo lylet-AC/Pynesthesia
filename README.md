@@ -64,7 +64,7 @@ There is also a quirk with Pynesthesia and any created game sharing the same set
 
 ### Editing and Changing Filenames
 
-Pynesthesia expects a couple things from the user in order to achieve it's goal.  First, Pynesthesia expects the input image which will become the map to be located in the `input` directory; and all images that will be used for the in game tiles to be located in the `sprites` directory.  When attempting to access an image that doesn't exist, Pynesthesia will prompt the user that the image does not exist and print out the directory it expects the image to be in.  This mostly effects the `newgame` and `addmap` commands.
+Pynesthesia expects a certain directories and inputs from the user in order to achieve it's goal.  First, Pynesthesia expects the input image (which will become the map) to be located in the `input` directory; and all images that will be used for the in game tiles to be located in the `sprites` directory.  When attempting to access an image that doesn't exist, Pynesthesia will prompt the user that the image does not exist and print out the directory it expects the image to be in.  This mostly effects the `newgame` and `addmap` commands.
 
 Secondly, Pynesthesia generates the Pygame code in a directory specified by the user.  Methods in Pynesthesia gather this data as user input. The user is free to remove their created game from the output directory, however, methods such as `addmap` and `confset` gather this data as user input.  This means that the created game directory must be placed back in the output directory prior to using Pynesthesia to edit the project.  This also means that certain things cannot be renamed or else Pynesthesia will not be able to find files appropriately.  Therefore, the user should not rename or remove generated folders, python files, or remove or rename comments in the generated code.
 
@@ -85,3 +85,5 @@ Below is a list of features that may be added in future updates:
  - Built in player class template
  - Built in camera class template
  - Parallax scrolling capabilities
+ - Built in tile loading and tile unloading
+ - Animations for tiles
