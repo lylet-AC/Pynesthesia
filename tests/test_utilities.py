@@ -18,16 +18,20 @@ def test_get_color_dict():
 def test_get_unique_color_list():
     """Gather a list of expected values and compare them against the output of the function"""
 
-    # 
-    expected_list = [(0, 0, 0), (255, 255, 255), (0, 0, 255), (255, 0, 0), (0, 255, 0)]
-    actual_list = utilities.get_unique_color_list(os.path.join(TEST_FOLDER, "testmap.png"))
+    # get the image first
+    image = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
 
+    # set up the expected and actual lists
+    expected_list = [(0, 0, 0), (0, 255, 0), (255, 0, 0), (255, 255, 255)]
+    actual_list = utilities.get_unique_color_list(image)
+
+    # compare lists
     assert repr(actual_list) == repr(expected_list)
 
 def test_get_color_map_list():
     """Use the testmap.png to ensure the color map list is correct"""
 
-    image = Image.open("testmap.png")
+    image = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
     actual_list = utilities.get_color_map_list(image)
 
     # a representation of the images' colors with RGB tuples
