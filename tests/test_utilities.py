@@ -26,7 +26,7 @@ def test_get_unique_color_list():
     actual_list = utilities.get_unique_color_list(image)
 
     # compare lists
-    assert repr(actual_list) == repr(expected_list)
+    assert actual_list == expected_list
 
 def test_get_color_map_list():
     """Use the testmap.png to ensure the color map list is correct"""
@@ -42,7 +42,7 @@ def test_get_color_map_list():
     [(255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255)] # row of white
     ]
 
-    assert repr(actual_list) == repr(expected_list)
+    assert actual_list == expected_list
 
 def test_return_updated_list():
     """Use two lists to test expected output of return_updated_list"""
@@ -57,11 +57,11 @@ def test_return_updated_list():
     updated_list, new_color_flag, new_colors = utilities.return_updated_list(old_list, new_list)
 
     # should be the same as the old_list with any data appended to it
-    assert repr(updated_list) == [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0)]
+    assert updated_list == [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0)]
     # new color exists in new_list so this should be true
-    assert repr(new_color_flag) == True
+    assert new_color_flag == True
     # this only contains the elements of new_list that are not in old_list
-    assert repr(new_colors) == [(255, 0, 0)]
+    assert new_colors == [(255, 0, 0)]
 
 def test_write_file():
     pass
