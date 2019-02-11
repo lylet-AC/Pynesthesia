@@ -110,7 +110,7 @@ def get_color_map_list(input_image):
     for w in range(width):
         map_list.append([])
         for h in range(height):
-            map_list[w].append(pix[w, h])
+            map_list[w].append(pix[h, w])
 
     return map_list
 
