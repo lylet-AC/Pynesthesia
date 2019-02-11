@@ -2,12 +2,24 @@ import utilities
 from PIL import Image
 import pickle
 import os
+import sys
 # local imports
 from settings import *
 from utilities import *
 
 def test_get_path_if_valid():
-    pass
+
+    #save the default stdin
+    stdin = sys.stdin
+
+    # redefine the input of the whole utilities function
+    utilities.input = lambda _:'README.md'
+    file = utilities.get_path_if_valid("prompt", type="file", path=ROOT_FOLDER)
+    # reset the input of the utilities function
+    utilities.input = stdin
+
+    assert file == os.path.join(ROOT_FOLDER, "README.md")
+
 
 def test_get_image_if_valid():
     pass
