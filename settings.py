@@ -18,7 +18,7 @@ LEVELS_FOLDER = os.path.join(ROOT_FOLDER, "levels")
 
 # test folder
 TEST_FOLDER = os.path.join(ROOT_FOLDER, "tests")
-TEST_IMAGE = os.path.join(TEST_FOLDER, "test_img.png")
+TEST_IMAGE = os.path.join(TEST_FOLDER, "testmap.png")
 
 """ Game settings here """
 # the width of the game window

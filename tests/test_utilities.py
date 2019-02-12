@@ -1,28 +1,41 @@
-import utilities
 from PIL import Image
 import pickle
 import os
+import io
 import sys
+from contextlib import contextmanager
 # local imports
 from settings import *
-from utilities import *
+import utilities
 
-def test_get_path_if_valid():
+def test_get_path_if_valid_files():
+    """test that the get_path_if_valid function does indeed return the correct path"""
 
-    #save the default stdin
-    stdin = sys.stdin
+    # try to open the README.md at the root of Pynesthesia
+    with replace_stdin(io.StringIO("README.md")):
+        file = utilities.get_path_if_valid("test prompt", type="file", path=ROOT_FOLDER)
 
-    # redefine the input of the whole utilities function
-    utilities.input = lambda _:'README.md'
-    file = utilities.get_path_if_valid("prompt", type="file", path=ROOT_FOLDER)
-    # reset the input of the utilities function
-    utilities.input = stdin
+    # try to open Pynesthesia.py at the root of Pynesthesia
+    with replace_stdin(io.StringIO("Pynesthesia.py")):
+        file2 = utilities.get_path_if_valid("test prompt", type="file", path=ROOT_FOLDER)
 
+    # assert that the file paths were returned and match
     assert file == os.path.join(ROOT_FOLDER, "README.md")
-
+    assert file2 == os.path.join(ROOT_FOLDER, "Pynesthesia.py")
 
 def test_get_image_if_valid():
-    pass
+    """test that the function returns the correct image file"""
+
+    #image opened directly
+    actual_img = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
+
+    #image opened with the method in utilities
+    with replace_stdin(io.StringIO(TEST_IMAGE)):
+        test_img = utilities.get_image_if_valid("test prompt", "testmap.png")
+
+    assert test_img.size == test_img.size
+    assert utilities.get_unique_color_list(test_img) == utilities.get_unique_color_list(actual_img)
+    assert utilities.get_color_map_list(test_img) == utilities.get_color_map_list(actual_img)
 
 def test_get_color_dict():
     pass
@@ -77,3 +90,11 @@ def test_return_updated_list():
 
 def test_write_file():
     pass
+
+@contextmanager
+def replace_stdin(target):
+    """use a context manager to change the value of sys.stdin and then revert it back"""
+    orig = sys.stdin
+    sys.stdin = target
+    yield
+    sys.stdin = orig
