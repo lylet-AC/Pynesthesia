@@ -26,18 +26,34 @@ def test_get_path_if_valid_files():
 def test_get_image_if_valid():
     """test that the function returns the correct image file"""
 
-    #image opened directly
+    # our image opened directly
     actual_img = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
 
-    #image opened with the method in utilities
+    # image opened with the method in utilities
     with replace_stdin(io.StringIO(TEST_IMAGE)):
         test_img = utilities.get_image_if_valid("test prompt", "testmap.png")
 
+    # ensure they are the same size
     assert test_img.size == test_img.size
+    # ensure the unique color lists are the same
     assert utilities.get_unique_color_list(test_img) == utilities.get_unique_color_list(actual_img)
+    # ensure the whole map lists are the same
     assert utilities.get_color_map_list(test_img) == utilities.get_color_map_list(actual_img)
 
 def test_get_color_dict():
+    """create simulated inputs and test that the color dict is being generated properly"""
+
+    # list of simulated inputs
+    input_list = ["wall.png", "wall", "barrel.png", "barrel", "tree.png", "tree", "tile.png", "tile"]
+
+    for input in input_list:
+        with replace_stdin(io.StringIO(input)):
+            pass
+
+    #TODO: Find a way to load all of these values into the input buffer
+    #NOTE: The input buffer works like a filereader, therefore if we can use StringIO to
+    #store these values in a series, they will simultaniously be run when needed.
+
     pass
 
 def test_get_unique_color_list():
