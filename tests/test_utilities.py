@@ -52,7 +52,7 @@ def test_get_color_dict():
 
     # list of simulated inputs
     inputs = io.StringIO(
-        'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\nfake1\nfake1\nfake2\nfake3')
+        'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n')
 
     # example list of unique colors
     unique_color_list = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255)]
