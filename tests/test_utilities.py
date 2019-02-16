@@ -43,18 +43,26 @@ def test_get_image_if_valid():
 def test_get_color_dict():
     """create simulated inputs and test that the color dict is being generated properly"""
 
-    # list of simulated inputs
-    input_list = ["wall.png", "wall", "barrel.png", "barrel", "tree.png", "tree", "tile.png", "tile"]
-
-    for input in input_list:
-        with replace_stdin(io.StringIO(input)):
-            pass
-
     #TODO: Find a way to load all of these values into the input buffer
     #NOTE: The input buffer works like a filereader, therefore if we can use StringIO to
     #store these values in a series, they will simultaniously be run when needed.
+    #'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n'
 
-    pass
+    # list of simulated inputs
+    inputs = io.StringIO('wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\nfake1\nfake1\nfake2\nfake3')
+
+    # example list of unique colors
+    unique_color_list = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255)]
+
+    with replace_stdin(inputs):
+        actual_dict = utilities.get_color_dict(unique_color_list, ignore_valid_files=True)
+
+    test_dict = {(0, 0, 0): ['wall.png', 'wall'],
+    (255, 0, 0): ['barrel.png', 'barrel'],
+    (0, 255, 0): ['tree.png', 'tree'],
+    (0, 0, 255): ['tile.png', 'tile']}
+
+    assert test_dict == actual_dict
 
 def test_get_unique_color_list():
     """Gather a list of expected values and compare them against the output of the function"""

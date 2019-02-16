@@ -49,7 +49,7 @@ def get_image_if_valid(prompt, path=""):
         else:
             return image
 
-def get_color_dict(unique_color_list):
+def get_color_dict(unique_color_list, ignore_valid_files=False):
     """This method takes a list of colors and asks the user for input"""
 
     color_dict = {}
@@ -68,10 +68,12 @@ def get_color_dict(unique_color_list):
             try:
                 object_image_path = input(
                     "\n[utilities] Please provide the image for this object: ")
-                test_open = Image.open(
-                    os.path.join(
-                        SPRITE_FOLDER,
-                        object_image_path))
+
+                if ignore_valid_files == False:
+                    test_open = Image.open(
+                        os.path.join(
+                            SPRITE_FOLDER,
+                            object_image_path))
 
                 color_dict[color] = [object_name, object_image_path]
 
@@ -79,10 +81,13 @@ def get_color_dict(unique_color_list):
 
             # if bad input is entered, an exception is thrown and caught here
             except BaseException:
-                print("[utilities] This image is not a supported format or does not exist.")
-                print("[utilities] Please insert the image into the 'sprites' directory and try again.\n")
+                print(
+                    "[utilities] This image is not a supported format or does not exist.")
+                print(
+                    "[utilities] Please insert the image into the 'sprites' directory and try again.\n")
 
     return color_dict
+
 
 def get_unique_color_list(input_image):
     """This method obtains a list of unique colors in the input list"""
