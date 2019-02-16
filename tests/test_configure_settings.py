@@ -6,5 +6,6 @@ import os
 from settings import *
 from configure_settings import *
 
+
 def test_configure_settings():
     pass

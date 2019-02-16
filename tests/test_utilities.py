@@ -8,20 +8,24 @@ from contextlib import contextmanager
 from settings import *
 import utilities
 
+
 def test_get_path_if_valid_files():
     """test that the get_path_if_valid function does indeed return the correct path"""
 
     # try to open the README.md at the root of Pynesthesia
     with replace_stdin(io.StringIO("README.md")):
-        file = utilities.get_path_if_valid("test prompt", type="file", path=ROOT_FOLDER)
+        file = utilities.get_path_if_valid(
+            "test prompt", type="file", path=ROOT_FOLDER)
 
     # try to open Pynesthesia.py at the root of Pynesthesia
     with replace_stdin(io.StringIO("Pynesthesia.py")):
-        file2 = utilities.get_path_if_valid("test prompt", type="file", path=ROOT_FOLDER)
+        file2 = utilities.get_path_if_valid(
+            "test prompt", type="file", path=ROOT_FOLDER)
 
     # assert that the file paths were returned and match
     assert file == os.path.join(ROOT_FOLDER, "README.md")
     assert file2 == os.path.join(ROOT_FOLDER, "Pynesthesia.py")
+
 
 def test_get_image_if_valid():
     """test that the function returns the correct image file"""
@@ -36,33 +40,39 @@ def test_get_image_if_valid():
     # ensure they are the same size
     assert test_img.size == test_img.size
     # ensure the unique color lists are the same
-    assert utilities.get_unique_color_list(test_img) == utilities.get_unique_color_list(actual_img)
+    assert utilities.get_unique_color_list(
+        test_img) == utilities.get_unique_color_list(actual_img)
     # ensure the whole map lists are the same
-    assert utilities.get_color_map_list(test_img) == utilities.get_color_map_list(actual_img)
+    assert utilities.get_color_map_list(
+        test_img) == utilities.get_color_map_list(actual_img)
+
 
 def test_get_color_dict():
     """create simulated inputs and test that the color dict is being generated properly"""
 
-    #TODO: Find a way to load all of these values into the input buffer
-    #NOTE: The input buffer works like a filereader, therefore if we can use StringIO to
-    #store these values in a series, they will simultaniously be run when needed.
-    #'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n'
+    # TODO: Find a way to load all of these values into the input buffer
+    # NOTE: The input buffer works like a filereader, therefore if we can use StringIO to
+    # store these values in a series, they will simultaniously be run when needed.
+    # 'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n'
 
     # list of simulated inputs
-    inputs = io.StringIO('wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\nfake1\nfake1\nfake2\nfake3')
+    inputs = io.StringIO(
+        'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\nfake1\nfake1\nfake2\nfake3')
 
     # example list of unique colors
     unique_color_list = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255)]
 
     with replace_stdin(inputs):
-        actual_dict = utilities.get_color_dict(unique_color_list, ignore_valid_files=True)
+        actual_dict = utilities.get_color_dict(
+            unique_color_list, ignore_valid_files=True)
 
     test_dict = {(0, 0, 0): ['wall.png', 'wall'],
-    (255, 0, 0): ['barrel.png', 'barrel'],
-    (0, 255, 0): ['tree.png', 'tree'],
-    (0, 0, 255): ['tile.png', 'tile']}
+                 (255, 0, 0): ['barrel.png', 'barrel'],
+                 (0, 255, 0): ['tree.png', 'tree'],
+                 (0, 0, 255): ['tile.png', 'tile']}
 
     assert test_dict == actual_dict
+
 
 def test_get_unique_color_list():
     """Gather a list of expected values and compare them against the output of the function"""
@@ -77,6 +87,7 @@ def test_get_unique_color_list():
     # compare lists
     assert actual_list == expected_list
 
+
 def test_get_color_map_list():
     """Use the testmap.png to ensure the color map list is correct"""
 
@@ -85,13 +96,15 @@ def test_get_color_map_list():
 
     # a representation of the images' colors with RGB tuples
     expected_list = [
-    [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], # row of black
-    [(0, 255, 0), (0, 255, 0), (0, 255, 0), (0, 255, 0)], # row of green
-    [(255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)], # row of red
-    [(255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255)] # row of white
+        [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],  # row of black
+        [(0, 255, 0), (0, 255, 0), (0, 255, 0), (0, 255, 0)],  # row of green
+        [(255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)],  # row of red
+        [(255, 255, 255), (255, 255, 255),
+         (255, 255, 255), (255, 255, 255)]  # row of white
     ]
 
     assert actual_list == expected_list
+
 
 def test_return_updated_list():
     """Use two lists to test expected output of return_updated_list"""
@@ -103,17 +116,21 @@ def test_return_updated_list():
     old_list = [(255, 255, 255), (0, 0, 0), (0, 0, 255)]
     new_list = [(255, 255, 255), (0, 0, 0), (255, 0, 0)]
 
-    updated_list, new_color_flag, new_colors = utilities.return_updated_list(old_list, new_list)
+    updated_list, new_color_flag, new_colors = utilities.return_updated_list(
+        old_list, new_list)
 
     # should be the same as the old_list with any data appended to it
-    assert updated_list == [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0)]
+    assert updated_list == [(255, 255, 255), (0, 0, 0),
+                            (0, 0, 255), (255, 0, 0)]
     # new color exists in new_list so this should be true
     assert new_color_flag == True
     # this only contains the elements of new_list that are not in old_list
     assert new_colors == [(255, 0, 0)]
 
+
 def test_write_file():
     pass
+
 
 @contextmanager
 def replace_stdin(target):

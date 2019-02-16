@@ -1,6 +1,7 @@
 import pygame as pg
 from settings import *
 
+
 class floor(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.background_sprites
@@ -12,6 +13,7 @@ class floor(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
 
 class wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -25,6 +27,7 @@ class wall(pg.sprite.Sprite):
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
 
+
 class floor(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.background_sprites
@@ -36,6 +39,7 @@ class floor(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
 
 class barrel(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -49,6 +53,7 @@ class barrel(pg.sprite.Sprite):
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
 
+
 class tile(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.background_sprites
@@ -60,6 +65,7 @@ class tile(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
 
 class tree(pg.sprite.Sprite):
     def __init__(self, game, x, y):

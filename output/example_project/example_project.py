@@ -4,6 +4,7 @@ import pickle
 from settings import *
 from classes import *
 
+
 class Game:
     def __init__(self):
         pg.init()
@@ -16,23 +17,47 @@ class Game:
 
     def load_data(self):
         # load the map data
-        self.map3_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map3.p"), "rb"))
-        self.map2_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map2.p"), "rb"))
-        self.map1_map = pickle.load(open(os.path.join(LEVELS_FOLDER, "map1.p"), "rb"))
+        self.map3_map = pickle.load(
+            open(
+                os.path.join(
+                    LEVELS_FOLDER,
+                    "map3.p"),
+                "rb"))
+        self.map2_map = pickle.load(
+            open(
+                os.path.join(
+                    LEVELS_FOLDER,
+                    "map2.p"),
+                "rb"))
+        self.map1_map = pickle.load(
+            open(
+                os.path.join(
+                    LEVELS_FOLDER,
+                    "map1.p"),
+                "rb"))
 
         # load the image data
-        self.floor_img = pg.image.load(os.path.join(SPRITE_FOLDER, "floor.png"))
-        self.floor_img = pg.transform.scale(self.floor_img, (TILE_SIZE, TILE_SIZE))
+        self.floor_img = pg.image.load(
+            os.path.join(SPRITE_FOLDER, "floor.png"))
+        self.floor_img = pg.transform.scale(
+            self.floor_img, (TILE_SIZE, TILE_SIZE))
         self.wall_img = pg.image.load(os.path.join(SPRITE_FOLDER, "wall.png"))
-        self.wall_img = pg.transform.scale(self.wall_img, (TILE_SIZE, TILE_SIZE))
-        self.floor_img = pg.image.load(os.path.join(SPRITE_FOLDER, "floor.png"))
-        self.floor_img = pg.transform.scale(self.floor_img, (TILE_SIZE, TILE_SIZE))
-        self.barrel_img = pg.image.load(os.path.join(SPRITE_FOLDER, "barrel.png"))
-        self.barrel_img = pg.transform.scale(self.barrel_img, (TILE_SIZE, TILE_SIZE))
+        self.wall_img = pg.transform.scale(
+            self.wall_img, (TILE_SIZE, TILE_SIZE))
+        self.floor_img = pg.image.load(
+            os.path.join(SPRITE_FOLDER, "floor.png"))
+        self.floor_img = pg.transform.scale(
+            self.floor_img, (TILE_SIZE, TILE_SIZE))
+        self.barrel_img = pg.image.load(
+            os.path.join(SPRITE_FOLDER, "barrel.png"))
+        self.barrel_img = pg.transform.scale(
+            self.barrel_img, (TILE_SIZE, TILE_SIZE))
         self.tile_img = pg.image.load(os.path.join(SPRITE_FOLDER, "tile.png"))
-        self.tile_img = pg.transform.scale(self.tile_img, (TILE_SIZE, TILE_SIZE))
+        self.tile_img = pg.transform.scale(
+            self.tile_img, (TILE_SIZE, TILE_SIZE))
         self.tree_img = pg.image.load(os.path.join(SPRITE_FOLDER, "tree.png"))
-        self.tree_img = pg.transform.scale(self.tree_img, (TILE_SIZE, TILE_SIZE))
+        self.tree_img = pg.transform.scale(
+            self.tree_img, (TILE_SIZE, TILE_SIZE))
 
     def new(self):
         # initialize all variables and do all the setup for a new game
@@ -90,6 +115,7 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
+
 
 g = Game()
 while True:

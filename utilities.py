@@ -29,6 +29,7 @@ def get_path_if_valid(prompt, type="file", path=""):
                 print("[utilities] That file does not exist at:\n")
                 print(full_path)
 
+
 def get_image_if_valid(prompt, path=""):
     """This method will ask the user a prompt and return an loaded PIL image"""
 
@@ -48,6 +49,7 @@ def get_image_if_valid(prompt, path=""):
         # if we do not encounter an exception break the loop
         else:
             return image
+
 
 def get_color_dict(unique_color_list, ignore_valid_files=False):
     """This method takes a list of colors and asks the user for input"""
@@ -104,6 +106,7 @@ def get_unique_color_list(input_image):
 
     return unique_list
 
+
 def get_color_map_list(input_image):
     """This method gathers a representation of the input image as list of lists containing the color data for each line of the input image"""
     pix = input_image.load()
@@ -118,6 +121,7 @@ def get_color_map_list(input_image):
             map_list[w].append(pix[h, w])
 
     return map_list
+
 
 def return_updated_list(old_color_list, new_color_list):
     """This method compares two lists and finds values that are not apart of the first list, but are in the second"""
