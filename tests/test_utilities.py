@@ -50,11 +50,6 @@ def test_get_image_if_valid():
 def test_get_color_dict():
     """create simulated inputs and test that the color dict is being generated properly"""
 
-    # TODO: Find a way to load all of these values into the input buffer
-    # NOTE: The input buffer works like a filereader, therefore if we can use StringIO to
-    # store these values in a series, they will simultaniously be run when needed.
-    # 'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n'
-
     # list of simulated inputs
     inputs = io.StringIO(
         'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\nfake1\nfake1\nfake2\nfake3')
@@ -129,6 +124,7 @@ def test_return_updated_list():
 
 
 def test_write_file():
+    """Create a file with sample contents, verify it exists and its contents"""
     pass
 
 
