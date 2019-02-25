@@ -44,9 +44,10 @@ def create_new_game():
         set_unique_colors_list(LEVELS_FOLDER, unique_color_list)
 
     # if we encounter an exception print a failure message.
-    except BaseException:
+    except BaseException as e:
         print("[newgame] Creation of the new game at: \n{} has failed".format(
             NEW_GAME_FOLDER))
+        print(e)
 
     # if we did not encounter an error, print that it was successfully created
     else:
@@ -58,7 +59,7 @@ def copy_necessary_files(NEW_GAME_FOLDER):
     """This method will copy important files to the new game directory"""
 
     # copy settings.py to the new game folder
-    copy2("settings.py", NEW_GAME_FOLDER)
+    copy2(SETTINGS_FILE, NEW_GAME_FOLDER)
     # copy the everything in our current SPRITE_FOLDER to a new sprites
     # directory in the new game
     copytree(SPRITE_FOLDER, os.path.join(NEW_GAME_FOLDER, "sprites"))

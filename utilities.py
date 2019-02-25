@@ -57,7 +57,7 @@ def get_color_dict(unique_color_list, ignore_valid_files=False):
     color_dict = {}
 
     for color in unique_color_list:
-        os.system('clear')
+        #os.system('clear')
         object_name = input(
             "[utilities] What would you like color {} to represent? ".format(color))
 
