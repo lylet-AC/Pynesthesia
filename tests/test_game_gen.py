@@ -98,13 +98,50 @@ def test_get_existing_color_list_after_add_map():
     assert actual_list == test_list
 
 def test_create_pygame_classes():
-    pass
+    """test the contents of the generated classes"""
 
+    # open file and read contents, compare to expected values
+    try:
+        with open(EXAMPLE_PROJECT_CLASSES) as reader:
+            file = reader.readlines()
+
+            # test random line numbers against what is expected
+            for count, line in enumerate(file):
+                if count == 0:
+                    assert "import pygame as pg\n" == line
+                elif count == 1:
+                    assert "from settings import *\n" == line
+                # assert that the first class was created correctly
+                elif count == 3:
+                    assert "class sand(pg.sprite.Sprite):\n" == line
+                elif count == 4:
+                    assert "    def __init__(self, game, x, y):\n" == line
+                elif count == 5:
+                    assert "        self.groups = game.background_sprites\n"
+                elif count == 6:
+                    assert "        pg.sprite.Sprite.__init__(self, self.groups)\n" == line
+                elif count == 7:
+                    assert "        self.game = game\n"
+                elif count == 8:
+                    assert "        self.image = game.sand_img\n" == line
+                elif count == 9:
+                    assert "        self.rect = self.image.get_rect()\n" == line
+                elif count == 10:
+                    assert "        self.x = x\n" == line
+                elif count == 11:
+                    assert "        self.y = y\n" == line
+
+
+
+    except Exception as e:
+        print(e)
+        assert True == False
 
 def test_create_main_game_code():
-    remove_proj_when_done()
+    """test the contents of the created game code"""
     pass
 
+    rmtree(EXAMPLE_PROJECT)
 
 @contextmanager
 def replace_stdin(target):
@@ -113,7 +150,3 @@ def replace_stdin(target):
     sys.stdin = target
     yield
     sys.stdin = orig
-
-def remove_proj_when_done():
-    """remove the test project when done testing"""
-    rmtree(EXAMPLE_PROJECT)
