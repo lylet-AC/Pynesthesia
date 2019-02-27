@@ -1,10 +1,12 @@
 import os
+import sys
 # local imports
 import configure_settings
 import game_gen
 
 
-if __name__ == "__main__":
+# if there are no arguments use the REPL
+if len(sys.argv) == 1:
 
     # initial display messages when starting up
     print("Welcome to Pynesthesia!")
@@ -54,3 +56,7 @@ if __name__ == "__main__":
             print("Invalid command.")
 
     os.system('clear')
+
+# if the user types GUI
+elif sys.argv[1] == "GUI":
+    print("Coming soon to a theater near you!")
