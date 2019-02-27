@@ -1,5 +1,4 @@
 from PIL import Image
-import pickle
 import os
 import io
 import sys
@@ -118,7 +117,7 @@ def test_return_updated_list():
     assert updated_list == [(255, 255, 255), (0, 0, 0),
                             (0, 0, 255), (255, 0, 0)]
     # new color exists in new_list so this should be true
-    assert new_color_flag == True
+    assert new_color_flag is True
     # this only contains the elements of new_list that are not in old_list
     assert new_colors == [(255, 0, 0)]
 

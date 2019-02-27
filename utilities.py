@@ -1,6 +1,5 @@
 from PIL import Image
 import os
-import pickle
 # local imports
 from settings import *
 
@@ -57,21 +56,21 @@ def get_color_dict(unique_color_list, ignore_valid_files=False):
     color_dict = {}
 
     for color in unique_color_list:
-        # os.system('clear')
+        os.system('clear')
         object_name = input(
             "[utilities] What would you like color {} to represent? ".format(color))
 
         EXIT = False
 
         # iterate through the while loop until correct input is gathered
-        while EXIT == False:
+        while EXIT is False:
 
             # try to get the sprite image
             try:
                 object_image_path = input(
                     "\n[utilities] Please provide the image for this object: ")
 
-                if ignore_valid_files == False:
+                if ignore_valid_files is False:
                     test_open = Image.open(
                         os.path.join(
                             SPRITE_FOLDER,

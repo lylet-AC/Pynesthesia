@@ -1,5 +1,3 @@
-from PIL import Image
-import pickle
 import os
 import io
 import sys
@@ -36,11 +34,11 @@ def test_create_new_game():
 
     inputs = io.StringIO(
         # name of the game
-        'w4Wd3k6SiogHe1\n' +
+        'w4Wd3k6SiogHe1\n'
         # image for the map
-        'testmap.png\n' +
+        'testmap.png\n'
         # name for the map
-        'testmap\n' +
+        'testmap\n'
         # input for get_color_dict
         'wall\nwall.png\nbarrel\nbarrel.png\ntree\ntree.png\ntile\ntile.png\nwater\nwater.png\n')
 
@@ -84,11 +82,11 @@ def test_add_map_to_project_with_new_colors():
 
     inputs = io.StringIO(
         # name of the project
-        'w4Wd3k6SiogHe1\n' +
+        'w4Wd3k6SiogHe1\n'
         # name for the new map
-        'testmap2\n' +
+        'testmap2\n'
         # image for the new map
-        'yellow.png\n' +
+        'yellow.png\n'
         # input for get_color_dict
         'sand\nsand.png\n')
 
@@ -145,7 +143,7 @@ def test_create_pygame_classes():
 
     except Exception as e:
         print(e)
-        assert True == False
+        assert False
 
 
 def test_create_main_game_code():
@@ -190,7 +188,7 @@ def test_create_main_game_code():
 
     except Exception as e:
         print(e)
-        assert True == False
+        assert False
 
     # remove the directory at the end of the testing
     rmtree(EXAMPLE_PROJECT)

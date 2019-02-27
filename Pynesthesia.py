@@ -1,11 +1,7 @@
-
 import os
-from PIL import Image
 # local imports
-from settings import *
 import configure_settings
 import game_gen
-import utilities
 
 
 if __name__ == "__main__":

@@ -1,6 +1,4 @@
 import utilities
-import PIL
-import pickle
 import os
 import io
 import sys
@@ -57,7 +55,7 @@ def test_configure_settings():
                     assert "32" in line
 
     except Exception:
-        assert True == False
+        assert False
 
     finally:
         cleanup_test_file()

@@ -1,4 +1,3 @@
-from PIL import Image
 import os
 from shutil import copy2, copytree
 import pickle
