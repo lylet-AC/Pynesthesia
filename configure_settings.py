@@ -1,5 +1,3 @@
-import os
-# local imports
 import utilities
 
 
@@ -7,7 +5,6 @@ def configure_settings(file_name):
 
     # list containing the new file to be written
     new_lines = []
-    prompt = ""
 
     try:
         print("[confset] Loading the file: ", file_name, "...\n")

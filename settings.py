@@ -16,9 +16,12 @@ OUTPUT_FOLDER = os.path.join(ROOT_FOLDER, "output")
 # level folder for the new game to load created levels
 LEVELS_FOLDER = os.path.join(ROOT_FOLDER, "levels")
 
+# files for later use
+SETTINGS_FILE = os.path.join(ROOT_FOLDER, "settings.py")
+
 # test folder
 TEST_FOLDER = os.path.join(ROOT_FOLDER, "tests")
-TEST_IMAGE = os.path.join(TEST_FOLDER, "test_img.png")
+TEST_IMAGE = os.path.join(TEST_FOLDER, "testmap.png")
 
 """ Game settings here """
 # the width of the game window
