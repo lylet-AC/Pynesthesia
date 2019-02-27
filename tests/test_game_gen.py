@@ -36,11 +36,11 @@ def test_create_new_game():
 
     inputs = io.StringIO(
         # name of the game
-        'w4Wd3k6SiogHe1\n'+
+        'w4Wd3k6SiogHe1\n' +
         # image for the map
-        'testmap.png\n'+
+        'testmap.png\n' +
         # name for the map
-        'testmap\n'+
+        'testmap\n' +
         # input for get_color_dict
         'wall\nwall.png\nbarrel\nbarrel.png\ntree\ntree.png\ntile\ntile.png\nwater\nwater.png\n')
 
@@ -48,19 +48,28 @@ def test_create_new_game():
     with replace_stdin(inputs):
         game_gen.create_new_game()
 
-    files = [EXAMPLE_PROJECT, EXAMPLE_PROJECT_LEVELS, EXAMPLE_PROJECT_SPRITES, EXAMPLE_PROJECT_CLASSES, EXAMPLE_PROJECT_GAME, EXAMPLE_PROJECT_SETTINGS]
+    files = [
+        EXAMPLE_PROJECT,
+        EXAMPLE_PROJECT_LEVELS,
+        EXAMPLE_PROJECT_SPRITES,
+        EXAMPLE_PROJECT_CLASSES,
+        EXAMPLE_PROJECT_GAME,
+        EXAMPLE_PROJECT_SETTINGS]
 
     # check if file path exists
     for file in files:
         assert os.path.exists(file)
 
+
 def test_get_existing_color_list_before_add_map():
     """Ensure the color list is created properly before adding a map"""
 
     actual_list = game_gen.get_existing_color_list(EXAMPLE_PROJECT_LEVELS)
-    test_list = [(0,0,0), (255,255,255), (0,0,255), (255,0,0), (0,255,0)]
+    test_list = [(0, 0, 0), (255, 255, 255),
+                 (0, 0, 255), (255, 0, 0), (0, 255, 0)]
 
     assert actual_list == test_list
+
 
 def test_add_map_to_project_with_new_colors():
     """
@@ -74,14 +83,14 @@ def test_add_map_to_project_with_new_colors():
     """
 
     inputs = io.StringIO(
-    # name of the project
-    'w4Wd3k6SiogHe1\n'+
-    # name for the new map
-    'testmap2\n'+
-    # image for the new map
-    'yellow.png\n'+
-    # input for get_color_dict
-    'sand\nsand.png\n')
+        # name of the project
+        'w4Wd3k6SiogHe1\n' +
+        # name for the new map
+        'testmap2\n' +
+        # image for the new map
+        'yellow.png\n' +
+        # input for get_color_dict
+        'sand\nsand.png\n')
 
     # run add_map_to_project with inputs
     with replace_stdin(inputs):
@@ -89,13 +98,16 @@ def test_add_map_to_project_with_new_colors():
 
     assert os.path.exists(EXAMPLE_PROJECT_TESTMAP2)
 
+
 def test_get_existing_color_list_after_add_map():
     """Ensure the color list is appended to properly after adding a map"""
 
     actual_list = game_gen.get_existing_color_list(EXAMPLE_PROJECT_LEVELS)
-    test_list = [(0,0,0), (255,255,255), (0,0,255), (255,0,0), (0,255,0), (230,230,19)]
+    test_list = [(0, 0, 0), (255, 255, 255), (0, 0, 255),
+                 (255, 0, 0), (0, 255, 0), (230, 230, 19)]
 
     assert actual_list == test_list
+
 
 def test_create_pygame_classes():
     """test the contents of the generated classes"""
@@ -131,51 +143,58 @@ def test_create_pygame_classes():
                 elif count == 11:
                     assert "        self.y = y\n" == line
 
-
-
     except Exception as e:
         print(e)
         assert True == False
+
 
 def test_create_main_game_code():
 
     # open file and read contents, compare to expected values
     try:
-        with open(EXAMPLE_PROJECT_CLASSES) as reader:
+        with open(EXAMPLE_PROJECT_GAME) as reader:
             file = reader.readlines()
 
-            # test random line numbers against what is expected
+            # check to see all import statements exist
             for count, line in enumerate(file):
                 if count == 0:
-                    assert "\n" == line
+                    assert "import pygame as pg\n" == line
                 elif count == 1:
-                    assert "\n" == line
+                    assert "import sys\n" == line
+                elif count == 2:
+                    assert "import pickle\n" == line
                 elif count == 3:
-                    assert "\n" == line
+                    assert "from settings import *\n" == line
                 elif count == 4:
-                    assert "\n" == line
-                elif count == 5:
-                    assert "\n" == line
+                    assert "from classes import *\n" == line
+
+                # check that the Game class was set up properly
                 elif count == 6:
-                    assert "\n" == line
+                    assert "class Game:\n" == line
                 elif count == 7:
-                    assert "\n" == line
+                    assert "    def __init__(self):\n" == line
                 elif count == 8:
-                    assert "\n" == line
+                    assert "        pg.init()\n" == line
                 elif count == 9:
-                    assert "\n" == line
+                    assert "        self.screen = pg.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))\n" == line
                 elif count == 10:
-                    assert "\n" == line
+                    assert "        pg.display.set_caption(DISPLAY_TITLE)\n" == line
                 elif count == 11:
-                    assert "\n" == line
-
-
+                    assert "        self.clock = pg.time.Clock()\n" == line
+                elif count == 12:
+                    assert "        pg.key.set_repeat(1, 1)\n" == line
+                elif count == 13:
+                    assert "        self.load_data()\n" == line
+                elif count == 14:
+                    assert "        self.set_current_map(self.testmap_map)\n" == line
 
     except Exception as e:
         print(e)
         assert True == False
 
+    # remove the directory at the end of the testing
     rmtree(EXAMPLE_PROJECT)
+
 
 @contextmanager
 def replace_stdin(target):

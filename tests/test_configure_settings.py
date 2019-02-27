@@ -12,17 +12,19 @@ from configure_settings import *
 # file that will be created for and then removed after this test has completed
 test_settings_file = (os.path.join(TEST_FOLDER, "mock_settings.py"))
 
+
 def generate_file_for_confset():
     """create a file for use in testing configure_settings"""
 
     new_lines = [
-    "DISPLAY_WIDTH = 0",
-    "DISPLAY_HEIGHT = 0",
-    "DISPLAY_FPS = 0",
-    "DISPLAY_TITLE = 'test'",
-    "TILE_SIZE = 0",]
+        "DISPLAY_WIDTH = 0",
+        "DISPLAY_HEIGHT = 0",
+        "DISPLAY_FPS = 0",
+        "DISPLAY_TITLE = 'test'",
+        "TILE_SIZE = 0", ]
 
     utilities.write_file(new_lines, test_settings_file)
+
 
 def test_configure_settings():
     """setup a test file, configure the settings, assert that the settings were changed"""
@@ -60,9 +62,11 @@ def test_configure_settings():
     finally:
         cleanup_test_file()
 
+
 def cleanup_test_file():
     """remove the testing file once the test has completed"""
     os.remove(test_settings_file)
+
 
 @contextmanager
 def replace_stdin(target):
