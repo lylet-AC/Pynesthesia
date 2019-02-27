@@ -1,11 +1,7 @@
-
 import os
-from PIL import Image
 # local imports
-from settings import *
 import configure_settings
 import game_gen
-import utilities
 
 
 if __name__ == "__main__":
@@ -50,7 +46,8 @@ if __name__ == "__main__":
             print("Step 2: Place sprite images in the 'sprites' directory.")
             print("These images will take the place of each pixel in the input image.\n")
             print("Step 3: Run the confset command to configure the game settings.\n")
-            print("Step 4: Run the newgame command to create a new Pynesthesia project.\n")
+            print(
+                "Step 4: Run the newgame command to create a new Pynesthesia project.\n")
             print("Follow the prompts and have fun!\n")
 
         else:

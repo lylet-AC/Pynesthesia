@@ -1,44 +1,104 @@
-import utilities
 from PIL import Image
-import pickle
 import os
+import io
+import sys
+from contextlib import contextmanager
 # local imports
 from settings import *
-from utilities import *
+import utilities
 
-def test_get_path_if_valid():
-    pass
+
+def test_get_path_if_valid_files():
+    """test that the get_path_if_valid function does indeed return the correct path"""
+
+    # try to open the README.md at the root of Pynesthesia
+    with replace_stdin(io.StringIO("README.md")):
+        file = utilities.get_path_if_valid(
+            "test prompt", type="file", path=ROOT_FOLDER)
+
+    # try to open Pynesthesia.py at the root of Pynesthesia
+    with replace_stdin(io.StringIO("Pynesthesia.py")):
+        file2 = utilities.get_path_if_valid(
+            "test prompt", type="file", path=ROOT_FOLDER)
+
+    # assert that the file paths were returned and match
+    assert file == os.path.join(ROOT_FOLDER, "README.md")
+    assert file2 == os.path.join(ROOT_FOLDER, "Pynesthesia.py")
+
 
 def test_get_image_if_valid():
-    pass
+    """test that the function returns the correct image file"""
+
+    # our image opened directly
+    actual_img = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
+
+    # image opened with the method in utilities
+    with replace_stdin(io.StringIO(TEST_IMAGE)):
+        test_img = utilities.get_image_if_valid("test prompt", "testmap.png")
+
+    # ensure they are the same size
+    assert test_img.size == test_img.size
+    # ensure the unique color lists are the same
+    assert utilities.get_unique_color_list(
+        test_img) == utilities.get_unique_color_list(actual_img)
+    # ensure the whole map lists are the same
+    assert utilities.get_color_map_list(
+        test_img) == utilities.get_color_map_list(actual_img)
+
 
 def test_get_color_dict():
-    pass
+    """create simulated inputs and test that the color dict is being generated properly"""
+
+    # list of simulated inputs
+    inputs = io.StringIO(
+        'wall.png\nwall\nbarrel.png\nbarrel\ntree.png\ntree\ntile.png\ntile\n')
+
+    # example list of unique colors
+    unique_color_list = [(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255)]
+
+    with replace_stdin(inputs):
+        actual_dict = utilities.get_color_dict(
+            unique_color_list, ignore_valid_files=True)
+
+    test_dict = {(0, 0, 0): ['wall.png', 'wall'],
+                 (255, 0, 0): ['barrel.png', 'barrel'],
+                 (0, 255, 0): ['tree.png', 'tree'],
+                 (0, 0, 255): ['tile.png', 'tile']}
+
+    assert test_dict == actual_dict
+
 
 def test_get_unique_color_list():
     """Gather a list of expected values and compare them against the output of the function"""
 
-    # 
-    expected_list = [(0, 0, 0), (255, 255, 255), (0, 0, 255), (255, 0, 0), (0, 255, 0)]
-    actual_list = utilities.get_unique_color_list(os.path.join(TEST_FOLDER, "testmap.png"))
+    # get the image first
+    image = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
 
-    assert repr(actual_list) == repr(expected_list)
+    # set up the expected and actual lists
+    expected_list = [(0, 0, 0), (0, 255, 0), (255, 0, 0), (255, 255, 255)]
+    actual_list = utilities.get_unique_color_list(image)
+
+    # compare lists
+    assert actual_list == expected_list
+
 
 def test_get_color_map_list():
     """Use the testmap.png to ensure the color map list is correct"""
 
-    image = Image.open("testmap.png")
+    image = Image.open(os.path.join(TEST_FOLDER, "testmap.png"))
     actual_list = utilities.get_color_map_list(image)
 
     # a representation of the images' colors with RGB tuples
     expected_list = [
-    [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], # row of black
-    [(0, 255, 0), (0, 255, 0), (0, 255, 0), (0, 255, 0)], # row of green
-    [(255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)], # row of red
-    [(255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255)] # row of white
+        [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)],  # row of black
+        [(0, 255, 0), (0, 255, 0), (0, 255, 0), (0, 255, 0)],  # row of green
+        [(255, 0, 0), (255, 0, 0), (255, 0, 0), (255, 0, 0)],  # row of red
+        [(255, 255, 255), (255, 255, 255),
+         (255, 255, 255), (255, 255, 255)]  # row of white
     ]
 
-    assert repr(actual_list) == repr(expected_list)
+    assert actual_list == expected_list
+
 
 def test_return_updated_list():
     """Use two lists to test expected output of return_updated_list"""
@@ -50,14 +110,27 @@ def test_return_updated_list():
     old_list = [(255, 255, 255), (0, 0, 0), (0, 0, 255)]
     new_list = [(255, 255, 255), (0, 0, 0), (255, 0, 0)]
 
-    updated_list, new_color_flag, new_colors = utilities.return_updated_list(old_list, new_list)
+    updated_list, new_color_flag, new_colors = utilities.return_updated_list(
+        old_list, new_list)
 
     # should be the same as the old_list with any data appended to it
-    assert repr(updated_list) == [(255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0)]
+    assert updated_list == [(255, 255, 255), (0, 0, 0),
+                            (0, 0, 255), (255, 0, 0)]
     # new color exists in new_list so this should be true
-    assert repr(new_color_flag) == True
+    assert new_color_flag is True
     # this only contains the elements of new_list that are not in old_list
-    assert repr(new_colors) == [(255, 0, 0)]
+    assert new_colors == [(255, 0, 0)]
+
 
 def test_write_file():
+    """Create a file with sample contents, verify it exists and its contents"""
     pass
+
+
+@contextmanager
+def replace_stdin(target):
+    """use a context manager to change the value of sys.stdin and then revert it back"""
+    orig = sys.stdin
+    sys.stdin = target
+    yield
+    sys.stdin = orig

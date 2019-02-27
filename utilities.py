@@ -1,6 +1,5 @@
 from PIL import Image
 import os
-import pickle
 # local imports
 from settings import *
 
@@ -29,6 +28,7 @@ def get_path_if_valid(prompt, type="file", path=""):
                 print("[utilities] That file does not exist at:\n")
                 print(full_path)
 
+
 def get_image_if_valid(prompt, path=""):
     """This method will ask the user a prompt and return an loaded PIL image"""
 
@@ -49,7 +49,8 @@ def get_image_if_valid(prompt, path=""):
         else:
             return image
 
-def get_color_dict(unique_color_list):
+
+def get_color_dict(unique_color_list, ignore_valid_files=False):
     """This method takes a list of colors and asks the user for input"""
 
     color_dict = {}
@@ -62,16 +63,18 @@ def get_color_dict(unique_color_list):
         EXIT = False
 
         # iterate through the while loop until correct input is gathered
-        while EXIT == False:
+        while EXIT is False:
 
             # try to get the sprite image
             try:
                 object_image_path = input(
                     "\n[utilities] Please provide the image for this object: ")
-                test_open = Image.open(
-                    os.path.join(
-                        SPRITE_FOLDER,
-                        object_image_path))
+
+                if ignore_valid_files is False:
+                    test_open = Image.open(
+                        os.path.join(
+                            SPRITE_FOLDER,
+                            object_image_path))
 
                 color_dict[color] = [object_name, object_image_path]
 
@@ -79,10 +82,13 @@ def get_color_dict(unique_color_list):
 
             # if bad input is entered, an exception is thrown and caught here
             except BaseException:
-                print("[utilities] This image is not a supported format or does not exist.")
-                print("[utilities] Please insert the image into the 'sprites' directory and try again.\n")
+                print(
+                    "[utilities] This image is not a supported format or does not exist.")
+                print(
+                    "[utilities] Please insert the image into the 'sprites' directory and try again.\n")
 
     return color_dict
+
 
 def get_unique_color_list(input_image):
     """This method obtains a list of unique colors in the input list"""
@@ -99,6 +105,7 @@ def get_unique_color_list(input_image):
 
     return unique_list
 
+
 def get_color_map_list(input_image):
     """This method gathers a representation of the input image as list of lists containing the color data for each line of the input image"""
     pix = input_image.load()
@@ -110,9 +117,10 @@ def get_color_map_list(input_image):
     for w in range(width):
         map_list.append([])
         for h in range(height):
-            map_list[w].append(pix[w, h])
+            map_list[w].append(pix[h, w])
 
     return map_list
+
 
 def return_updated_list(old_color_list, new_color_list):
     """This method compares two lists and finds values that are not apart of the first list, but are in the second"""
