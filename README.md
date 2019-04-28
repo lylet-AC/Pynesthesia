@@ -27,7 +27,7 @@ Then verify the installation by typing in `python3` into the terminal.  Once the
 
 ### Windows
 
-If you are a windows user and need to install Python3 / tkinter / Pip3, [download](https://www.python.org/downloads/windows/) the python3 installation file.  This file is capable of installing Python3, tkinter, and Pip3 given the correct boxes are checked. Meaning that one must ensure upon installing Python that **the td/tk and IDLE checkboxes are marked for installing tkinter and Pip3 with Python.** Pynesthesia specifically uses `Python 3.6.7`, although other iterations of Python3 should work properly as well.
+If you are a windows user and need to install Python3 / tkinter / Pip3, [download](https://www.python.org/downloads/windows/) the python3 installation file.  This file is capable of installing Python3, tkinter, and Pip3 given the correct boxes are checked. Meaning that one must ensure upon installing Python that **the td/tk and IDLE checkboxes are marked for installing tkinter and Pip3 with Python.** Additionally, it is important to check the **Install pip** checkbox to ensure that Python comes with the necessary package installer requried for Pynesthesia's dependencies.  Pynesthesia specifically uses `Python 3.6.7`, although other iterations of Python3 should work properly as well.
 
 ### Mac OSX
 
@@ -38,8 +38,8 @@ Much like Linux, Python3 is included in the Mac OSX installation.  However, to k
 Pynesthesia uses a requirements.txt file to automatically install all of the necessary dependencies with pip3.  To install the requirements, run the following commands in the root directory of Pynesthesia after ensuring Python3 has been properly installed:
 
  ```
- pip3 install --upgrade pip
- pip3 install --user -r requirements.txt
+ python3 -m pip install --upgrade pip
+ python3 -m pip install --user -r requirements.txt
  ```
 
 Next run Pynesthesia itself with:
@@ -61,6 +61,21 @@ Using Pynesthesia is as easy as following the on screen prompts that show up on 
 It is first recommended to use the `confset` command to configure the settings of your new game. Alternatively, attributes can be edited manually by opening the `settings.py` file in a text editor and changing appropriate values by hand.  It is, however, important to note that the directories listings in the settings file should not be edited with an explanation given in the next section.  Settings below the `"""Game settings here"""` docstring are the ones that are configurable without issue.
 
 There is also a quirk with Pynesthesia and any created game sharing the same settings file.  This means that Pynesthesia uses the directories the same way the generated game does.
+
+### Output
+
+When Pynesthesia is finished gathering user input, it will begin the creation of the tile based game.  If the creation is successful, a message will appear in the terminal stating: 
+`[newgame] Successfully created the new game at: <filepath>`
+
+This means that the tile based game was created in the `output` directory in the root folder of Pynesthesia.  Inside the `output` directory, the new game is generated in a new directory that inherits the title entered by the user.  Thus, if a user entered `test` when prompted for a title, a directory called `test` will be created which contains the code for the new game.
+
+To run the created game, enter:
+```
+python3 <name_of_game>.py
+```
+in the aforementioned folder containing the new game.
+
+
 
 ### Editing and Changing Filenames
 
